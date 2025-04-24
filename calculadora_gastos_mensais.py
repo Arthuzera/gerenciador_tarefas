@@ -35,30 +35,67 @@ def salvar_dados():
         arquivo.write(f"{categoria}: {valor:.2f}\n")
       print("Dados financeiros salvos com sucesso!")
 
-def carregar_dados(arquivo):
-  try:
-    with open("dados_financeiros.txt", "r"): 
-      linhas = arquivo.readlines()
-      receitas.clear()
-      despesas.clear()
-      for linha in linhas:
-        if linha.startswith("Receita:"):
-          receitas = [float(valor) for valor in linha.split(":") if valor.strip()]
-        elif linha.startswith("Despesa:"):
-          categoria, valor = valor.split(":")
-          categoria = categoria.strip()
-          valor = float(valor.strip())
-          if categoria in despesas:
-            despesas[categoria] = valor
-          else:
-            despesas[categoria] = valor
-      print("Dados financeiros carregados com sucesso!")
-  except FileNotFoundError:
-    print("Arquivo de dados financeiros não encontrado. Nenhum dado foi carregado.")
-  except Exception as e:
-    print(f"Erro ao carregar dados financeiros: {e}")
+def carregar_dados():
+    try:
+        with open("dados_financeiros.txt", "r") as arquivo:
+            linhas = arquivo.readlines()
+            receitas.clear()
+            for linha in linhas:
+                if linha.startswith("Receita:"):
+                    valor = float(linha.split(":")[1].strip())
+                    receitas.append(valor)
+                elif linha.startswith("Despesa:"):
+                    categoria, valor = linha.split(":")
+                    categoria = categoria.replace("Despesa", "").strip()
+                    valor = float(valor.strip())
+                    if categoria in despesas:
+                        despesas[categoria] += valor
+                    else:
+                        despesas[categoria] = valor
+            print("Dados financeiros carregados com sucesso!")
+    except FileNotFoundError:
+        print("Arquivo de dados financeiros não encontrado. Nenhum dado foi carregado.")
+    except Exception as e:
+        print(f"Erro ao carregar dados financeiros: {e}")
 
 def sair():
   print("\nAté a próxima!")
   exit()
 
+while True:
+    print("\nMenu:")
+    print("1- Adicionar receita")
+    print("2- Adicionar despesa")
+    print("3- Exibir resumo financeiro")
+    print("4- Salvar dados")
+    print("5- Carregar dados")
+    print("6- Sair")
+
+    opcao = input("\nSelecione uma opção(1-6): ")
+
+    if opcao == "1":
+      valor = float(input("\nDigite o valor da receita:"))
+      adicionar_receita(valor)
+
+    elif opcao == "2":
+      categoria = input("\nDigite a categoria da despesa (Moradia, Alimentação, Transporte, Lazer, Saúde, Educação, Comunicação, Impostos, Outros): ")
+      if categoria not in despesas:
+        print("Categoria inválida!")
+        continue
+      valor = float(input("\nDigite o valor da despesa:"))
+      adicionar_despesa(categoria, valor)
+
+    elif opcao == "3":
+      exibir_resumo()
+
+    elif opcao == "4":
+      salvar_dados()
+
+    elif opcao == "5":
+      carregar_dados()
+
+    elif opcao == "6":
+      sair()
+
+    else:
+      print("\nOpção inválida! Tente novamente.")
