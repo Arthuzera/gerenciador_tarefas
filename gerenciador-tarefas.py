@@ -40,3 +40,15 @@ def adicionar_tarefa(tarefas, tarefa):
     tarefas[tarefa] = False
     salvar_tarefas(tarefas) # Chamar a função para salvar a tarefa no arquivo
     print(f"Tarefa '{tarefa}' foi adicionada com sucesso!")
+
+def visualizar_tarefas(tarefas):
+    """Exibir todas as tarefas cadastradas."""
+    if tarefas: # Verificar se existem tarefas cadastradas
+        print('\nListas de tarefas:')
+        print('-'*40)
+        for i, (tarefa, concluida) in enumerate(tarefas.item(), 1):
+            status = "Concluida" if concluida else 'Pendente' # Verificar se a tarefa já foi concluída ou se ainda está pendente
+            print(f"{i}. {tarefa:<30} - {status}.")
+        print('-'*40)
+    else:
+        print('\nNenhuma tarefa cadastrada')
