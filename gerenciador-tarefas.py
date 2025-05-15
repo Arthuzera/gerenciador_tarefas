@@ -26,3 +26,17 @@ def salvar_tarefas(tarefas):
     """Salvar as tarefas em um arquivo JSON."""
     with open(ARQUIVO_TAREFA, 'w', encoding='utf-8') as arquivo:
         json.dump(tarefas, arquivo, ensure_ascii=False, indent=4) # Serialiazar/Adicionar as 'tarefas' no 'arquivo'
+
+def adicionar_tarefa(tarefas, tarefa):
+    """Adicionar uma tarefa a lista."""
+    if not tarefa.strip(): # Validação simples para saber se foi adicionada alguma tarfera
+        print('Erro: A tarefa não pode estar vazia!')
+        return
+    
+    if tarefa in tarefas:
+        print(f'Aviso: A tarefa {tarefa} já existe!')
+        return
+    
+    tarefas[tarefa] = False
+    salvar_tarefas(tarefas)
+    print(f"Tarefa '{tarefa}' foi adicionada com sucesso!")
