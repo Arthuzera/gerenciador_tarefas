@@ -33,10 +33,10 @@ def adicionar_tarefa(tarefas, tarefa):
         print('Erro: A tarefa não pode estar vazia!')
         return
     
-    if tarefa in tarefas:
+    if tarefa in tarefas: # Verificar se a tarefa já existe
         print(f'Aviso: A tarefa {tarefa} já existe!')
         return
     
     tarefas[tarefa] = False
-    salvar_tarefas(tarefas)
+    salvar_tarefas(tarefas) # Chamar a função para salvar a tarefa no arquivo
     print(f"Tarefa '{tarefa}' foi adicionada com sucesso!")
