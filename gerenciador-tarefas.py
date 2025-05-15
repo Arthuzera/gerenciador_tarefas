@@ -52,3 +52,12 @@ def visualizar_tarefas(tarefas):
         print('-'*40)
     else:
         print('\nNenhuma tarefa cadastrada')
+
+def marcar_tarefa_concluida(tarefas, tarefa):
+    """Marcar uma tarefa como concluída."""
+    if tarefa in tarefas: # Verifica se a tarefa existe na lista
+        tarefas[tarefa]=True # Mudar o valor pra True, assinalando que ele foi concluida
+        salvar_tarefas(tarefa)
+        print(f"Tarefa '{tarefa}' marcada como concluída!")
+    else:
+        print(f"Tarefa '{tarefa}' não foi encontrada.")
