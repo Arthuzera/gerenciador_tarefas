@@ -1,63 +1,23 @@
-tarefas = {}
+"""
+Gerenciador de Tarefas - Versão melhorada
+- Estruturação básica do código
+- Funções com responsabilidades bem definidas
+- Persistência básica de dados
+- Validações simples
+"""
+import os
+import json
 
-def adicionar_tarefa(tarefa):
-    tarefas[tarefa] = False
-    print(f"Tarefa '{tarefa}' adicionada com sucesso!")
+# Constantes
+ARQUIVO_TAREFA = 'tarefas.json'
 
-def visualizar_tarefas():
-    if tarefas:
-        print("Lista de tarefas:")
-        for tarefa, concluida in tarefas.items():
-            status = "Concluída" if concluida else "Pendente"
-            print(f"Tarefa: {tarefa}, Status: {status}")
-    else:
-        print("Nenhuma tarefa cadastrada.")
-
-def marcar_tarefa_concluida(tarefa):
-    if tarefa in tarefas:
-        tarefas[tarefa] = True
-        print(f"Tarefa '{tarefa}' marcada como concluída!")
-    else:
-        print(f"Tarefa '{tarefa}' não encontrada!")
-
-def remover_tarefa(tarefa):
-    if tarefa in tarefas:
-        del tarefas[tarefa]
-        print(f"Tarefa '{tarefa}' removida da lista!")
-    else:
-        print(f"Tarefa '{tarefa}' não encontrada!")
-
-def sair():
-    print("\nAté a próxima!")
-    exit()
-
-while True:
-    print("\nMenu:")
-    print("1- Adicionar tarefa")
-    print("2- Visualizar tarefas")
-    print("3- Marcar tarefa como concluída")
-    print("4- Remover tarefa")
-    print("5- Sair")
-
-    opcao = input("\nSelecione uma opção(1-5): ")
-
-    if opcao == "1":
-        tarefa = input("\nAdicione a tarefa: ")
-        adicionar_tarefa(tarefa)
-    
-    elif opcao == "2":
-        visualizar_tarefas()
-
-    elif opcao == "3":
-        tarefa = input("\nDigite o nome da tarefa a ser marcada como concluída: ")
-        marcar_tarefa_concluida(tarefa)
-
-    elif opcao == "4":
-        tarefa = input("\nDigite o nome da tarefa a ser removida: ")
-        remover_tarefa(tarefa)
-
-    elif opcao == "5":
-        sair()
-
-    else:
-        print("\nOpção não reconhecida, tente novamente!")
+def carregar_tarefas():
+    """Carregar as tarefas salvas do arquivo, caso existir."""
+    if os.path.exists(ARQUIVO_TAREFA): # Verificar se o arquivo das tarefas exista
+        try:
+            with open(ARQUIVO_TAREFA, 'r', encoding='utf-8') as arquivo: # Abrindo o arquivo 'tarefas.json' de forma segura
+                return json.load(arquivo) # Processar os dados dentro do arquivo
+        except json.JSONDecodeError:
+            print('Erro ao carregar o arquivo de tarefas. Criando nova lista.')
+            return {} # Caso aconteça algum tipo de erro ao carregar o arquivo, criar um novo arquivo vazio
+    return {} # Caso o arquivo não exista, criar um arquivo json, vazio claro
