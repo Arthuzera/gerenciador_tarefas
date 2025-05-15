@@ -94,3 +94,17 @@ def listar_e_selecionar_tarefa(tarefas, acao):
     except ValueError:
         print("Entrada inválida! Digite um número.") # Exceção caso o valor digitado em escolha, não seja um número.
         return None    
+    
+def exibir_menu():
+    """Exibe o menu de opções do programa."""
+    print("\n" + "=" * 30)
+    print("  GERENCIADOR DE TAREFAS")
+    print("=" * 30)
+    print("1- Adicionar tarefa")
+    print("2- Visualizar tarefas")
+    print("3- Marcar tarefa como concluída")
+    print("4- Remover tarefa")
+    print("5- Sair")
+    print("=" * 30)
+
+
