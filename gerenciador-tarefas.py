@@ -70,3 +70,27 @@ def remover_tarefas(tarefas, tarefa):
         print(f"Tarefa '{tarefa}' foi removida com sucesso!")
     else:
         print(f"Tarefa '{tarefa}' não foi encontrada na lista.")
+
+def listar_e_selecionar_tarefa(tarefas, acao):
+    """Exiba uma lista e permite seleciona algumas pelo seu número."""
+    if not tarefas:
+        return None
+    
+    lista_tarefas = list(tarefas.keys()) # Criar uma lista de tarefas usando suas chaves
+
+    for i, tarefa in enumerate(lista_tarefas, 1):
+        status = "Concluida" if tarefas[tarefa] else "Pendente"
+        print(f" {i}. {tarefa} - {status}") # Enumerar os elementos dentro da lista de tarefas
+    
+    try:
+        escolha = int(input("\nDigite o número da tarefa ou 0 para cancelar: ")) # Escolher o número da tarefa que quer visualizar individualmente
+        if escolha==0:
+            return None
+        if 1 <= escolha <= len(lista_tarefas): # Verificar se o valor da escolha é válido, ou seja, a escolha deve ser um número entre 1 e a quantidade de elementos que temos dentro da lista
+            return lista_tarefas[escolha - 1] # Retornar a tarefa escolhida. 'escolha - 1' porque as listas começam a contar de 0 em diante ou seja, se quisermos ver o primeiro elemento, séria 1-1=0 - 'lista_tarefas[0]' que é o primeiro elemento da lista.
+        else:
+            print("Número inválido!") # Verificação caso o número seja inválido, como um número negativo ou um número que não esteja entre 1 e o número total de tarefas dentro da lista.
+            return None
+    except ValueError:
+        print("Entrada inválida! Digite um número.") # Exceção caso o valor digitado em escolha, não seja um número.
+        return None    
