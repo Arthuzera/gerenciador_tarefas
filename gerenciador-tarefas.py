@@ -21,3 +21,8 @@ def carregar_tarefas():
             print('Erro ao carregar o arquivo de tarefas. Criando nova lista.')
             return {} # Caso aconteça algum tipo de erro ao carregar o arquivo, criar um novo arquivo vazio
     return {} # Caso o arquivo não exista, criar um arquivo json, vazio claro
+
+def salvar_tarefas(tarefas):
+    """Salvar as tarefas em um arquivo JSON."""
+    with open(ARQUIVO_TAREFA, 'w', encoding='utf-8') as arquivo:
+        json.dump(tarefas, arquivo, ensure_ascii=False, indent=4) # Serialiazar/Adicionar as 'tarefas' no 'arquivo'
