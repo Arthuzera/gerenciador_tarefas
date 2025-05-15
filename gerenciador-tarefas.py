@@ -16,7 +16,7 @@ def carregar_tarefas():
     if os.path.exists(ARQUIVO_TAREFA): # Verificar se o arquivo das tarefas exista
         try:
             with open(ARQUIVO_TAREFA, 'r', encoding='utf-8') as arquivo: # Abrindo o arquivo 'tarefas.json' de forma segura
-                return json.load(arquivo) # Processar os dados dentro do arquivo
+                return json.load(arquivo) # Processar e deserializar os dados dentro do arquivo
         except json.JSONDecodeError:
             print('Erro ao carregar o arquivo de tarefas. Criando nova lista.')
             return {} # Caso aconteça algum tipo de erro ao carregar o arquivo, criar um novo arquivo vazio
@@ -62,7 +62,7 @@ def marcar_tarefa_concluida(tarefas, tarefa):
     else:
         print(f"Tarefa '{tarefa}' não foi encontrada.")
 
-def remover_tarefas(tarefas, tarefa):
+def remover_tarefa(tarefas, tarefa):
     """Remover uma tarefa da lista."""
     if tarefa in tarefas: # Verificar se a tarefa está na lista
         del tarefas[tarefa] # Usar o del do python para eliminar de forma mais simples a tarefa da lista
@@ -107,4 +107,47 @@ def exibir_menu():
     print("5- Sair")
     print("=" * 30)
 
+def main():
+    """Função principal do programa."""
+    tarefas = carregar_tarefas()
+    
+    while True:
+        exibir_menu()
+        opcao = input("\nSelecione uma opção (1-5): ")
+        
+        if opcao == "1":
+            tarefa = input("\nAdicione a tarefa: ")
+            adicionar_tarefa(tarefas, tarefa)
+        
+        elif opcao == "2":
+            visualizar_tarefas(tarefas)
+        
+        elif opcao == "3":
+            # Opção 1: Digite o nome da tarefa
+            # tarefa = input("\nDigite o nome da tarefa a ser marcada como concluída: ")
+            # marcar_tarefa_concluida(tarefas, tarefa)
+            
+            # Opção 2: Selecione da lista (mais amigável)
+            tarefa = listar_e_selecionar_tarefa(tarefas, "marcar como concluída")
+            if tarefa:
+                marcar_tarefa_concluida(tarefas, tarefa)
+        
+        elif opcao == "4":
+            # Opção 1: Digite o nome da tarefa
+            # tarefa = input("\nDigite o nome da tarefa a ser removida: ")
+            # remover_tarefa(tarefas, tarefa)
+            
+            # Opção 2: Selecione da lista (mais amigável)
+            tarefa = listar_e_selecionar_tarefa(tarefas, "remover")
+            if tarefa:
+                remover_tarefa(tarefas, tarefa)
+        
+        elif opcao == "5":
+            print("\nAté a próxima!")
+            break
+        
+        else:
+            print("\nOpção não reconhecida, tente novamente!")
 
+if __name__ == "__main__":
+    main()
