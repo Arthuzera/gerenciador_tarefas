@@ -57,7 +57,16 @@ def marcar_tarefa_concluida(tarefas, tarefa):
     """Marcar uma tarefa como concluída."""
     if tarefa in tarefas: # Verifica se a tarefa existe na lista
         tarefas[tarefa]=True # Mudar o valor pra True, assinalando que ele foi concluida
-        salvar_tarefas(tarefa)
+        salvar_tarefas(tarefas)
         print(f"Tarefa '{tarefa}' marcada como concluída!")
     else:
         print(f"Tarefa '{tarefa}' não foi encontrada.")
+
+def remover_tarefas(tarefas, tarefa):
+    """Remover uma tarefa da lista."""
+    if tarefa in tarefas: # Verificar se a tarefa está na lista
+        del tarefas[tarefa] # Usar o del do python para eliminar de forma mais simples a tarefa da lista
+        salvar_tarefas(tarefas) # Salvar a lista sem a tarefa que se deseja excluir
+        print(f"Tarefa '{tarefa}' foi removida com sucesso!")
+    else:
+        print(f"Tarefa '{tarefa}' não foi encontrada na lista.")
